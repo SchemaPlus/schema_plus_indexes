@@ -10,35 +10,18 @@ module SchemaPlusIndexes
           base.alias_method_chain :initialize, :schema_plus_indexes
         end
 
-        attr_accessor :expression
-        attr_accessor :operator_classes
-
-        def case_sensitive?
-          @case_sensitive
-        end
-
-        def conditions
-          ActiveSupport::Deprecation.warn "ActiveRecord IndexDefinition#conditions is deprecated, used #where instead"
-          where
-        end
-
-        def kind
-          ActiveSupport::Deprecation.warn "ActiveRecord IndexDefinition#kind is deprecated, used #using instead"
-          using
-        end
-
         def initialize_with_schema_plus_indexes(*args) #:nodoc:
           # same args as add_index(table_name, column_names, options)
           if args.length == 3 and Hash === args.last
             table_name, column_names, options = args + [{}]
             initialize_without_schema_plus_indexes(table_name, options[:name], options[:unique], column_names, options[:length], options[:orders], options[:where], options[:type], options[:using])
-            @expression = options[:expression]
-            @case_sensitive = options.include?(:case_sensitive) ? options[:case_sensitive] : true
-            @operator_classes = options[:operator_classes] || {}
           else # backwards compatibility
             initialize_without_schema_plus_indexes(*args)
-            @case_sensitive = true
-            @operator_classes = {}
+          end
+          unless orders.blank?
+            # fill out orders with :asc when undefined.  make sure hash ordering
+            # follows column ordering.
+            self.orders = Hash[columns.map{|column| [column, orders[column] || :asc]}]
           end
         end
 
@@ -50,10 +33,7 @@ module SchemaPlusIndexes
           return false unless !!self.unique == !!other.unique
           return false unless Array.wrap(self.lengths).compact.sort == Array.wrap(other.lengths).compact.sort
           return false unless self.where == other.where
-          return false unless self.expression == other.expression
           return false unless (self.using||:btree) == (other.using||:btree)
-          return false unless self.operator_classes == other.operator_classes
-          return false unless !!self.case_sensitive? == !!other.case_sensitive?
           true
         end
       end
