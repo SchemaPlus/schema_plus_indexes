@@ -9,16 +9,16 @@ Schema_plus_index adds various convenient capabilities to `ActiveRecord`'s index
 
 * Adds shorthands to the `:index` option in migrations
 
-      create_table :parts do |t|
-        t.string :role,             index: true     # shorthand for index: {}
-        t.string :product_code,     index: :unique  # shorthand for index: { unique: true }
-        t.string :first_name
-        t.string :last_name,        index: { with: :first_name }  # multi-column index
+        create_table :parts do |t|
+          t.string :role,             index: true     # shorthand for index: {}
+          t.string :product_code,     index: :unique  # shorthand for index: { unique: true }
+          t.string :first_name
+          t.string :last_name,        index: { with: :first_name }  # multi-column index
 
-        t.string :country_code
-        t.string :area_code
-        t.string :local_number,     index: { with: [:country_code, :area_code] } # multi-column index
-      end
+          t.string :country_code
+          t.string :area_code
+          t.string :local_number,     index: { with: [:country_code, :area_code] } # multi-column index
+        end
 
   Of course options can be combined, such as `index: { with: :first_name, unique: true, name: "my_index"}`
 
