@@ -1,14 +1,9 @@
 module SchemaPlusIndexes
   module Middleware
     module Dumper
+      module Table
 
-      def self.insert
-        SchemaMonkey::Middleware::Dumper::Table.append ColumnIndexes
-      end
-
-      class ColumnIndexes < SchemaMonkey::Middleware::Base
-        def call(env)
-          continue env
+        def after(env)
 
           # move each column's index to its column, and remove them from the
           # list of indexes that AR would dump after the table.  Any left
