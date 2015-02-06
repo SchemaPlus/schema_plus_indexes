@@ -1,4 +1,4 @@
-require 'schema_monkey'
+require 'schema_plus/core'
 
 require_relative 'schema_plus_indexes/active_record/base'
 require_relative 'schema_plus_indexes/active_record/connection_adapters/abstract_adapter'
