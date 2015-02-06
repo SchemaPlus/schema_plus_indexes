@@ -2,8 +2,8 @@ module SchemaPlusIndexes
   module ActiveRecord
 
     module Base
-      def self.included(base) #:nodoc:
-        base.extend(ClassMethods)
+      def self.prepended(base)
+        base.singleton_class.prepend ClassMethods
       end
 
       module ClassMethods #:nodoc:
