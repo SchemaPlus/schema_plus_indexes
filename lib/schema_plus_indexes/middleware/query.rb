@@ -1,7 +1,7 @@
 module SchemaPlusIndexes
   module Middleware
-    module Sqlite3
-      module Query
+    module Query
+      module Sqlite3
         module Indexes
 
           def after(env)
