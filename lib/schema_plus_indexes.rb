@@ -6,6 +6,6 @@ require_relative 'schema_plus_indexes/active_record/connection_adapters/index_de
 require_relative 'schema_plus_indexes/middleware/dumper'
 require_relative 'schema_plus_indexes/middleware/migration'
 require_relative 'schema_plus_indexes/middleware/model'
-require_relative 'schema_plus_indexes/middleware/query'
+require_relative 'schema_plus_indexes/middleware/schema'
 
-SchemaMonkey.register(SchemaPlusIndexes)
+SchemaMonkey.register SchemaPlusIndexes

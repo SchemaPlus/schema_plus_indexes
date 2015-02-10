@@ -1,6 +1,6 @@
 module SchemaPlusIndexes
   module Middleware
-    module Query
+    module Schema
       module Sqlite3
         module Indexes
 
