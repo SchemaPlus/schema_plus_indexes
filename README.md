@@ -5,7 +5,7 @@
 
 # schema_plus_indexes
 
-Schema_plus_index adds various convenient capabilities to `ActiveRecord`'s index handling:
+SchemaPlusIndexes adds various convenient capabilities to `ActiveRecord`'s index handling:
 
 * Adds shorthands to the `:index` option in migrations
 
@@ -45,11 +45,25 @@ schema_plus_indexes is part of the [SchemaPlus](https://github.com/SchemaPlus/) 
 
 ## Installation
 
-In your application's Gemfile
+<!-- SCHEMA_DEV: TEMPLATE INSTALLATION - begin -->
+<!-- These lines are auto-inserted from a schema_dev template -->
+As usual:
 
 ```ruby
-gem "schema_plus_indexes"
+gem "schema_plus_indexes"                # in a Gemfile
+gem.add_dependency "schema_plus_indexes" # in a .gemspec
 ```
+
+To use with a rails app, also include
+
+```ruby
+gem "schema_monkey_rails"
+```
+
+which creates a Railtie to that will insert SchemaPlus::Indexes appropriately into the rails stack. To use with Padrino, see [schema_monkey_padrino](https://github.com/SchemaPlus/schema_monkey_padrino).
+
+<!-- SCHEMA_DEV: TEMPLATE INSTALLATION - end -->
+
 ## Compatibility
 
 schema_plus_indexes is tested on
@@ -73,25 +87,6 @@ the standard protocol: fork, feature branch, develop, push, and issue pull reque
 
 Some things to know about to help you develop and test:
 
-* **schema_dev**:  schema_plus_indexes uses [schema_dev](https://github.com/SchemaPlus/schema_dev) to
-  facilitate running rspec tests on the matrix of ruby, rails, and database
-  versions that the gem supports, both locally and on
-  [travis-ci](http://travis-ci.org/SchemaPlus/schema_plus_indexes)
-
-  To to run rspec locally on the full matrix, do:
-
-        $ schema_dev bundle install
-        $ schema_dev rspec
-
-  You can also run on just one configuration at a time;  For info, see `schema_dev --help` or the
-  [schema_dev](https://github.com/SchemaPlus/schema_dev) README.
-
-  The matrix of configurations is specified in `schema_dev.yml` in
-  the project root.
-
-* **schema_monkey**: schema_plus_indexes extends ActiveRecord using
-  [schema_monkey](https://github.com/SchemaPlus/schema_monkey)'s extension
-  API and protocols -- see its README for details.  If your contribution needs any additional monkey patching
-  that isn't already supported by
-  [schema_monkey](https://github.com/SchemaPlus/schema_monkey), please head
-  over there and submit a PR.
+<!--SCHEMA_DEV: TEMPLATE USES SCHEMA_DEV -->
+<!--SCHEMA_DEV: TEMPLATE USES SCHEMA_CORE -->
+<!--SCHEMA_DEV: TEMPLATE USES SCHEMA_MONKEY -->
