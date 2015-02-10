@@ -87,6 +87,41 @@ the standard protocol: fork, feature branch, develop, push, and issue pull reque
 
 Some things to know about to help you develop and test:
 
-<!--SCHEMA_DEV: TEMPLATE USES SCHEMA_DEV -->
-<!--SCHEMA_DEV: TEMPLATE USES SCHEMA_CORE -->
-<!--SCHEMA_DEV: TEMPLATE USES SCHEMA_MONKEY -->
+<!-- SCHEMA_DEV: TEMPLATE USES SCHEMA_DEV - begin -->
+<!-- These lines are auto-inserted from a schema_dev template -->
+* **schema_dev**:  SchemaPlus::Indexes uses [schema_dev](https://github.com/SchemaPlus/schema_dev) to
+  facilitate running rspec tests on the matrix of ruby, activerecord, and database
+  versions that the gem supports, both locally and on
+  [travis-ci](http://travis-ci.org/SchemaPlus/schema_plus_indexes)
+
+  To to run rspec locally on the full matrix, do:
+
+        $ schema_dev bundle install
+        $ schema_dev rspec
+
+  You can also run on just one configuration at a time;  For info, see `schema_dev --help` or the [schema_dev](https://github.com/SchemaPlus/schema_dev) README.
+
+  The matrix of configurations is specified in `schema_dev.yml` in
+  the project root.
+
+
+<!-- SCHEMA_DEV: TEMPLATE USES SCHEMA_DEV - end -->
+<!-- SCHEMA_DEV: TEMPLATE USES SCHEMA_PLUS_CORE - begin -->
+<!-- These lines are auto-inserted from a schema_dev template -->
+* **schema_plus_core**: SchemaPlus::Indexes uses the SchemaPlus::Core API that
+  provides middleware callback stacks to make it easy to extend
+  ActiveRecord's behavior.  If that API is missing something you need for
+  your contribution, please head over to
+  [schema_plus_core](https://github/SchemaPlus/schema_plus_core) and open
+  an issue or pull request.  
+
+<!-- SCHEMA_DEV: TEMPLATE USES SCHEMA_PLUS_CORE - end -->
+<!-- SCHEMA_DEV: TEMPLATE USES SCHEMA_MONKEY - begin -->
+<!-- These lines are auto-inserted from a schema_dev template -->
+* **schema_monkey**: SchemaPlus::Indexes is implemented as a
+  [schema_monkey](https://github.com/SchemaPlus/schema_monkey) client,
+  using [schema_monkey](https://github.com/SchemaPlus/schema_monkey)'s
+  convention-based protocols for extending ActiveRecord and using middleware stacks.
+  For more information see [schema_monkey](https://github.com/SchemaPlus/schema_monkey)'s README.
+
+<!-- SCHEMA_DEV: TEMPLATE USES SCHEMA_MONKEY - end -->
