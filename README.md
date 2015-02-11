@@ -3,45 +3,11 @@
 [![Coverage Status](https://img.shields.io/coveralls/SchemaPlus/schema_plus_indexes.svg)](https://coveralls.io/r/SchemaPlus/schema_plus_indexes)
 [![Dependency Status](https://gemnasium.com/lomba/schema_plus_indexes.svg)](https://gemnasium.com/SchemaPlus/schema_plus_indexes)
 
-# schema_plus_indexes
+# SchemaPlus::Indexes
 
-SchemaPlus::Indexes adds various convenient capabilities to `ActiveRecord`'s index handling:
+SchemaPlus::Indexes adds various convenient capabilities to `ActiveRecord`'s index handling.
 
-* Adds shorthands to the `:index` option in migrations
-
-        create_table :parts do |t|
-          t.string :role,             index: true     # shorthand for index: {}
-          t.string :product_code,     index: :unique  # shorthand for index: { unique: true }
-          t.string :first_name
-          t.string :last_name,        index: { with: :first_name }  # multi-column index
-
-          t.string :country_code
-          t.string :area_code
-          t.string :local_number,     index: { with: [:country_code, :area_code] } # multi-column index
-        end
-
-  Of course options can be combined, such as `index: { with: :first_name, unique: true, name: "my_index"}`
-
-* Ensures that the `:index` option is respected by `Migration.add_column` and in `Migration.change_table`
-
-* Adds `:if_exists` option to `ActiveRecord::Migration.remove_index`
-
-* Provides consistent behavior regarding attempted duplicate index
-  creation: Ignore and log a warning.  Different versions of Rails with
-  different db adapters otherwise behave inconsistently: some ignore the
-  attempt, some raise an error.
-
-* `Model.indexes` returns the indexes defined for the `ActiveRecord` model.
-  Shorthand for `connection.indexes(Model.table_name)`; the value is cached
-  until the next time `Model.reset_column_information` is called
-
-* In the schema dump `schema.rb`, index definitions are included within the
-  `create_table` statements rather than added afterwards
-
-* When using SQLite3, makes sure that the definitions returned by
-  `connection.indexes` properly include the column orders (`:asc` or `:desc`)
-
-schema_plus_indexes is part of the [SchemaPlus](https://github.com/SchemaPlus/) family of Ruby on Rails extension gems.
+SchemaPlus::Indexes is part of the [SchemaPlus](https://github.com/SchemaPlus/) family of Ruby on Rails extension gems.
 
 ## Installation
 
@@ -64,6 +30,83 @@ which creates a Railtie to that will insert SchemaPlus::Indexes appropriately in
 
 <!-- SCHEMA_DEV: TEMPLATE INSTALLATION - end -->
 
+
+## Features
+
+### Migrations:
+
+#### Shorthand to define a column with an index:
+
+```ruby
+t.string :role,             index: true     # shorthand for index: {}
+```
+
+#### Shorthand to define a column with a unique index:
+```ruby
+t.string :product_code,     index: :unique  # shorthand for index: { unique: true }
+```
+
+#### Create multi-column indexes as part of column definition
+
+Adds an option to include other columns in the index:
+
+```ruby
+t.string :first_name
+t.string :last_name,        index: { with: :first_name }
+
+t.string :country_code
+t.string :area_code
+t.string :local_number,     index: { with: [:country_code, :area_code] }
+```
+
+#### Create indexes with `add_column`, `change_table`
+
+ActiveRecord supports the `index:` option to column definitions when creating table.  SchemaPlus::Indexes extends that to work also with `add_column` and in `change_table`
+
+```ruby
+add_column "tablename", "columnname", index: { ... }
+
+change_table :tablename do |t|
+  t.integer :column,    index: true
+end
+```
+
+These of course accept the shorthands and `with:` option described above.
+
+#### Remove index :if_exsts
+
+```ruby
+remove_index "tablename", "columnname", if_exists: true
+```
+
+### Models
+
+SchemaPlus::Indexes lets you easily get the indexes of a model:
+
+```ruby
+Model.indexes  # shorthand for `connection.indexes(Model.table_name)`
+```
+
+The value gets cached until the next time `Model.reset_column_information` is called.
+
+### Other things...
+
+* Provides consistent behavior regarding attempted duplicate index
+  creation: Ignore and log a warning.  Different versions of Rails with
+  different db adapters otherwise behave inconsistently: some ignore the
+  attempt, some raise an error.
+
+* In the schema dump `schema.rb`, index definitions are included within the
+  `create_table` statements rather than added afterwards
+
+* When using SQLite3, makes sure that the definitions returned by
+  `connection.indexes` properly include the column orders (`:asc` or `:desc`)
+  
+* For the `ActiveRecord::ConnectionAdapters::IndexDefinition` class (the object that's returned by `connection.indexes`), SchemaPlus::Indexes:
+  * Provides an `==` operator to compare if two objects refer to an equivalent index
+  * Allows calling `new` with a signature that matches add_index: `IndexDefinition.new(table_name, column_names, options)`
+  * Fleshes out the `:orders` attribute, listing `:asc` for a column instead of leaving it undefined.
+
 ## Compatibility
 
 schema_plus_indexes is tested on
@@ -78,7 +121,7 @@ schema_plus_indexes is tested on
 
 ### v0.1.0
 
-* Initial release
+* Initial release, extracted from schema_plus 1.x
 
 ## Development & Testing
 
