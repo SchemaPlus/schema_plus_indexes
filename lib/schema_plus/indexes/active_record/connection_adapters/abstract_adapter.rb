@@ -1,4 +1,4 @@
-module SchemaPlusIndexes
+module SchemaPlus::Indexes
   module ActiveRecord
     module ConnectionAdapters
       module AbstractAdapter

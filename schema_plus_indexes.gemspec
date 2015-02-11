@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'schema_plus_indexes/version'
+require 'schema_plus/indexes/version'
 
 Gem::Specification.new do |gem|
   gem.name          = "schema_plus_indexes"
-  gem.version       = SchemaPlusIndexes::VERSION
+  gem.version       = SchemaPlus::Indexes::VERSION
   gem.authors       = ["ronen barzel"]
   gem.email         = ["ronen@barzel.org"]
   gem.summary       = %q{Adds shorthands and conveniences to ActiveRecord's handling of indexes}

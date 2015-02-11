@@ -1,4 +1,4 @@
-module SchemaPlusIndexes
+module SchemaPlus::Indexes
   module Middleware
     module Migration
 
@@ -34,12 +34,12 @@ module SchemaPlusIndexes
 
         # Ignore duplicates
         #
-        # SchemaPlusIndexes modifies SchemaStatements::add_index so that it ignores
+        # SchemaPlus::Indexes modifies SchemaStatements::add_index so that it ignores
         # errors raised about add an index that already exists -- i.e. that has
         # the same index name, same columns, and same options -- and writes a
         # warning to the log. Some combinations of rails & DB adapter versions
         # would log such a warning, others would raise an error; with
-        # SchemaPlusIndexes all versions log the warning and do not raise the error.
+        # SchemaPlus::Indexes all versions log the warning and do not raise the error.
         def around(env)
           yield env
         rescue => e

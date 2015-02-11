@@ -1,4 +1,4 @@
-module SchemaPlusIndexes
+module SchemaPlus::Indexes
   module Middleware
     module Schema
       module Sqlite3

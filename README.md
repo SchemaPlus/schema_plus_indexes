@@ -5,7 +5,7 @@
 
 # schema_plus_indexes
 
-SchemaPlusIndexes adds various convenient capabilities to `ActiveRecord`'s index handling:
+SchemaPlus::Indexes adds various convenient capabilities to `ActiveRecord`'s index handling:
 
 * Adds shorthands to the `:index` option in migrations
 
