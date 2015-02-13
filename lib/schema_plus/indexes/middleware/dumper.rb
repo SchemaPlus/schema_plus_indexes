@@ -9,12 +9,12 @@ module SchemaPlus::Indexes
           # list of indexes that AR would dump after the table.  Any left
           # over will still be dumped by AR.
           env.table.columns.each do |column|
-            
+
             # first check for a single-column index
             if (index = env.table.indexes.find(&its.columns == [column.name]))
               column.add_option column_index(env, column, index)
               env.table.indexes.delete(index)
-              
+
             # then check for the first of a multi-column index
             elsif (index = env.table.indexes.find(&its.columns.first == column.name))
               column.add_option column_index(env, column, index)

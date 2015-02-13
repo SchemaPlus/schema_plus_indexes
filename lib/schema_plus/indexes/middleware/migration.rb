@@ -3,7 +3,7 @@ module SchemaPlus::Indexes
     module Migration
 
       module Column
-       
+
         # Shortcuts
         def before(env)
           case env.options[:index]

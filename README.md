@@ -101,7 +101,7 @@ The value gets cached until the next time `Model.reset_column_information` is ca
 
 * When using SQLite3, makes sure that the definitions returned by
   `connection.indexes` properly include the column orders (`:asc` or `:desc`)
-  
+
 * For the `ActiveRecord::ConnectionAdapters::IndexDefinition` class (the object that's returned by `connection.indexes`), SchemaPlus::Indexes:
   * Provides an `==` operator to compare if two objects refer to an equivalent index
   * Allows calling `new` with a signature that matches add_index: `IndexDefinition.new(table_name, column_names, options)`
@@ -156,7 +156,7 @@ Some things to know about to help you develop and test:
   ActiveRecord's behavior.  If that API is missing something you need for
   your contribution, please head over to
   [schema_plus_core](https://github/SchemaPlus/schema_plus_core) and open
-  an issue or pull request.  
+  an issue or pull request.
 
 <!-- SCHEMA_DEV: TEMPLATE USES SCHEMA_PLUS_CORE - end -->
 <!-- SCHEMA_DEV: TEMPLATE USES SCHEMA_MONKEY - begin -->
