@@ -98,6 +98,7 @@ The value gets cached until the next time `Model.reset_column_information` is ca
   * Provides an `==` operator to compare if two objects refer to an equivalent index
   * Allows calling `new` with a signature that matches add_index: `IndexDefinition.new(table_name, column_names, options)`
   * Fleshes out the `:orders` attribute, listing `:asc` for a column instead of leaving it undefined.
+  * Prevents errors from a down migration attempting to remove an index that wasn't previously added (this can arise, e.g. with auto-indexing plugins).
 
 ## Compatibility
 
