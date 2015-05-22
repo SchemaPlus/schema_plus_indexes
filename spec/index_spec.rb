@@ -30,9 +30,7 @@ describe "index" do
 
 
     after(:each) do
-      migration.suppress_messages do
-        migration.remove_index(:users, :name => @index.name) if (@index ||= nil)
-      end
+      migration.remove_index(:users, :name => @index.name) if (@index ||= nil)
     end
 
     it "should create index when called without additional options" do
@@ -164,16 +162,12 @@ describe "index" do
 
   protected
   def add_index(*args)
-    migration.suppress_messages do
-      migration.add_index(*args)
-    end
+    migration.add_index(*args)
     User.reset_column_information
   end
 
   def remove_index(*args)
-    migration.suppress_messages do
-      migration.remove_index(*args)
-    end
+    migration.remove_index(*args)
     User.reset_column_information
   end
 

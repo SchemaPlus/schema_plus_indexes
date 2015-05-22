@@ -5,7 +5,7 @@ describe "Index definition" do
 
   let(:migration) { ::ActiveRecord::Migration }
 
-  before(:all) do
+  before(:each) do
     define_schema(:auto_create => false) do
       create_table :users, :force => true do |t|
         t.string :login
@@ -21,12 +21,6 @@ describe "Index definition" do
     end
     class User < ::ActiveRecord::Base ; end
     class Post < ::ActiveRecord::Base ; end
-  end
-
-  around(:each) do |example|
-    migration.suppress_messages do
-      example.run
-    end
   end
 
   after(:each) do

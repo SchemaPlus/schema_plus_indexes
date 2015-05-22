@@ -3,40 +3,37 @@ require 'stringio'
 
 describe "Schema dump" do
 
-  before(:all) do
-    ActiveRecord::Migration.suppress_messages do
-      ActiveRecord::Schema.define do
-        connection.tables.each do |table| drop_table table, :cascade => true end
+  before(:each) do
+    define_schema do
 
-        create_table :users, :force => true do |t|
-          t.string :login
-          t.datetime :deleted_at
-          t.integer :first_post_id
-        end
+      create_table :users, :force => true do |t|
+        t.string :login
+        t.datetime :deleted_at
+        t.integer :first_post_id
+      end
 
-        create_table :posts, :force => true do |t|
-          t.text :body
-          t.integer :user_id
-          t.integer :first_comment_id
-          t.string :string_no_default
-          t.integer :short_id
-          t.string :str_short
-          t.integer :integer_col
-          t.float :float_col
-          t.decimal :decimal_col
-          t.datetime :datetime_col
-          t.timestamp :timestamp_col
-          t.time :time_col
-          t.date :date_col
-          t.binary :binary_col
-          t.boolean :boolean_col
-        end
+      create_table :posts, :force => true do |t|
+        t.text :body
+        t.integer :user_id
+        t.integer :first_comment_id
+        t.string :string_no_default
+        t.integer :short_id
+        t.string :str_short
+        t.integer :integer_col
+        t.float :float_col
+        t.decimal :decimal_col
+        t.datetime :datetime_col
+        t.timestamp :timestamp_col
+        t.time :time_col
+        t.date :date_col
+        t.binary :binary_col
+        t.boolean :boolean_col
+      end
 
-        create_table :comments, :force => true do |t|
-          t.text :body
-          t.integer :post_id
-          t.integer :commenter_id
-        end
+      create_table :comments, :force => true do |t|
+        t.text :body
+        t.integer :post_id
+        t.integer :commenter_id
       end
     end
     class ::User < ActiveRecord::Base ; end
@@ -83,16 +80,12 @@ describe "Schema dump" do
   def with_index(*args)
     options = args.extract_options!
     model, columns = args
-    ActiveRecord::Migration.suppress_messages do
-      ActiveRecord::Migration.add_index(model.table_name, columns, options)
-    end
+    ActiveRecord::Migration.add_index(model.table_name, columns, options)
     model.reset_column_information
     begin
       yield
     ensure
-      ActiveRecord::Migration.suppress_messages do
-        ActiveRecord::Migration.remove_index(model.table_name, :name => determine_index_name(model, columns, options))
-      end
+      ActiveRecord::Migration.remove_index(model.table_name, :name => determine_index_name(model, columns, options))
     end
   end
 
