@@ -43,7 +43,7 @@ describe "Schema dump" do
 
   it "should include in-table index definition" do
     with_index Post, :user_id do
-      expect(dump_posts).to match(/"user_id",.*index:/)
+      expect(dump_posts).to match(/"user_id",.*:index=>/)
     end
   end
 
@@ -55,19 +55,19 @@ describe "Schema dump" do
 
   it "should include index name" do
     with_index Post, :user_id, :name => "custom_name" do
-      expect(dump_posts).to match(/"user_id",.*index:.*name: "custom_name"/)
+      expect(dump_posts).to match(/"user_id",.*:index=>.*:name=>"custom_name"/)
     end
   end
 
   it "should define unique index" do
     with_index Post, :user_id, :name => "posts_user_id_index", :unique => true do
-      expect(dump_posts).to match(/"user_id",.*index:.*name: "posts_user_id_index", unique: true/)
+      expect(dump_posts).to match(/"user_id",.*:index=>.*:name=>"posts_user_id_index", :unique=>true/)
     end
   end
 
   it "should include index order", :mysql => :skip do
     with_index Post, [:user_id, :first_comment_id, :short_id], :order => { :user_id => :asc, :first_comment_id => :desc } do
-      expect(dump_posts).to match(/"user_id".*index: {.*with: \["first_comment_id", "short_id"\],.*order: {"user_id"=>:asc, "first_comment_id"=>:desc, "short_id"=>:asc}/)
+      expect(dump_posts).to match(/"user_id".*:index=>{.*:with=>\["first_comment_id", "short_id"\],.*:order=>{"user_id"=>:asc, "first_comment_id"=>:desc, "short_id"=>:asc}/)
     end
   end
 

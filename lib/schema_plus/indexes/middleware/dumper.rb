@@ -12,12 +12,12 @@ module SchemaPlus::Indexes
 
             # first check for a single-column index
             if (index = env.table.indexes.find(&its.columns == [column.name]))
-              column.add_option column_index(env, column, index)
+              column.options[:index] = index_options(env, column, index)
               env.table.indexes.delete(index)
 
             # then check for the first of a multi-column index
             elsif (index = env.table.indexes.find(&its.columns.first == column.name))
-              column.add_option column_index(env, column, index)
+              column.options[:index] = index_options(env, column, index)
               env.table.indexes.delete(index)
             end
 
@@ -25,12 +25,11 @@ module SchemaPlus::Indexes
 
         end
 
-        def column_index(env, column, index)
-          parts = []
-          parts << "name: #{index.name.inspect}"
-          parts << "with: #{(index.columns - [column.name]).inspect}" if index.columns.length > 1
-          parts << index.options unless index.options.blank?
-          "index: {#{parts.join(', ')}}"
+        def index_options(env, column, index)
+          options = {}
+          options[:name] = index.name
+          options[:with] = (index.columns - [column.name]) if index.columns.length > 1
+          options.merge index.options
         end
       end
     end
