@@ -65,7 +65,7 @@ end
 
 These of course accept the shorthands and `with:` option described above.
 
-#### Remove index :if_exsts
+#### Remove index :if_exists
 
 ```ruby
 remove_index "tablename", "columnname", if_exists: true
