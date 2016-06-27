@@ -1,4 +1,5 @@
 require 'schema_plus/core'
+require 'its-it'
 
 require_relative 'indexes/active_record/base'
 require_relative 'indexes/active_record/connection_adapters/abstract_adapter'
