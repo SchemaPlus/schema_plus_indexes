@@ -113,6 +113,10 @@ schema_plus_indexes is tested on
 ## History
 
 
+### v0.2.3
+
+* Missing require
+
 ### v0.2.2
 
 * Explicit gem dependencies
