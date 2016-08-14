@@ -26,7 +26,7 @@ end
 
 def define_schema(config={}, &block)
   ActiveRecord::Schema.define do
-    connection.tables.each do |table|
+    connection.data_sources.each do |table|
       drop_table table, :force => :cascade
     end
     instance_eval &block
