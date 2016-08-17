@@ -1,6 +1,7 @@
 require 'schema_plus/core'
 require 'its-it'
 
+require_relative 'indexes/remove_if_exists'
 require_relative 'indexes/active_record/base'
 require_relative 'indexes/active_record/connection_adapters/abstract_adapter'
 require_relative 'indexes/active_record/connection_adapters/postgresql_adapter'
