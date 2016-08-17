@@ -5,7 +5,7 @@
 ---
 sudo: false
 rvm:
-- 2.3.0
+- 2.3.1
 gemfile:
 - gemfiles/activerecord-5.0/Gemfile.mysql2
 - gemfiles/activerecord-5.0/Gemfile.postgresql
