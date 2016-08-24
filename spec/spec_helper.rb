@@ -24,9 +24,17 @@ RSpec.configure do |config|
   end
 end
 
+# shim to handle connection.tables deprecation in favor of
+# connection.data_sources
+def each_table(connection)
+  (connection.try :data_sources || connection.tables).each do |table|
+    yield table
+  end
+end
+
 def define_schema(config={}, &block)
   ActiveRecord::Schema.define do
-    connection.tables.each do |table|
+    each_table(connection) do |table|
       drop_table table, :force => :cascade
     end
     instance_eval &block

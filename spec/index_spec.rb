@@ -8,7 +8,7 @@ describe "index" do
   describe "add_index" do
 
     before(:each) do
-      connection.tables.each do |table| connection.drop_table table, cascade: true end
+      each_table connection do |table| connection.drop_table table, cascade: true end
 
       define_schema(:auto_create => false) do
         create_table :users, :force => true do |t|
@@ -80,7 +80,7 @@ describe "index" do
   describe "remove_index" do
 
     before(:each) do
-      connection.tables.each do |table| connection.drop_table table, cascade: true end
+      each_table connection do |table| connection.drop_table table, cascade: true end
       define_schema(:auto_create => false) do
         create_table :users, :force => true do |t|
           t.string :login

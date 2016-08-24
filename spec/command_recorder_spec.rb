@@ -37,7 +37,9 @@ describe "Command Recorder" do
     end
 
     it "does not fail when reverting" do
-      migration = Class.new ::ActiveRecord::Migration[5.0] do
+      migration = ::ActiveRecord::Migration
+      migration = migration[5.0] if migration.respond_to? :[] # without [], will be rails 4.2 migration
+      migration = Class.new migration do
         define_method(:change) {
           change_table("comments") do |t|
             t.integer :column
