@@ -114,7 +114,7 @@ schema_plus_indexes is tested on
 
 ### v0.2.4
 
-* Supports AR 5.0.  Thanks to [@myabc][https://github.com/myabc]
+* Supports AR 5.0.  Thanks to [@myabc](https://github.com/myabc)
 
 
 ### v0.2.3
