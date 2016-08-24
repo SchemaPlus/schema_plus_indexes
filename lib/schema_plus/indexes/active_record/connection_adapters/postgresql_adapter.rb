@@ -1,7 +1,7 @@
 module SchemaPlus::Indexes
   module ActiveRecord
     module ConnectionAdapters
-      module AbstractAdapter
+      module PostgresqlAdapter
         include ::SchemaPlus::Indexes::RemoveIfExists
       end
     end

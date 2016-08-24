@@ -1,7 +1,7 @@
 module SchemaPlus::Indexes
   module ActiveRecord
     module ConnectionAdapters
-      module AbstractAdapter
+      module Sqlite3Adapter
         include ::SchemaPlus::Indexes::RemoveIfExists
       end
     end
