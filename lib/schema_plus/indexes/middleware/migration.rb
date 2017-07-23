@@ -44,6 +44,7 @@ module SchemaPlus::Indexes
           yield env
         rescue => e
           raise unless e.message.match(/["']([^"']+)["'].*already exists/)
+
           name = $1
           existing = env.caller.indexes(env.table_name).find{|i| i.name == name}
           attempted = ::ActiveRecord::ConnectionAdapters::IndexDefinition.new(env.table_name, env.column_names, env.options.merge(:name => name))

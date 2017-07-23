@@ -68,7 +68,7 @@ describe "Schema dump" do
   it "should include index order", :mysql => :skip do
     with_index Post, [:user_id, :first_comment_id, :short_id], :order => { :user_id => :asc, :first_comment_id => :desc } do
 
-      if ActiveRecord.version >= Gem::Version.new('5.1')
+      if ActiveRecord.version >= Gem::Version.new('5.0')
         expect(dump_posts).to match(/"user_id".*:index=>{.*:with=>\["first_comment_id", "short_id"\],.*:order=>{:user_id=>:asc, :first_comment_id=>:desc, :short_id=>:asc}/)
       else
         expect(dump_posts).to match(/"user_id".*:index=>{.*:with=>\["first_comment_id", "short_id"\],.*:order=>{"user_id"=>:asc, "first_comment_id"=>:desc, "short_id"=>:asc}/)
