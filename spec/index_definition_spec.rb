@@ -24,7 +24,7 @@ describe "Index definition" do
   end
 
   after(:each) do
-    migration.remove_index :users, :name => 'users_login_index' if migration.index_name_exists? :users, 'users_login_index', true
+    migration.remove_index :users, :name => 'users_login_index' if migration.index_name_exists? :users, 'users_login_index', nil
   end
 
   context "when index is multicolumn" do
