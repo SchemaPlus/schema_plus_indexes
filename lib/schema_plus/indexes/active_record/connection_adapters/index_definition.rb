@@ -25,8 +25,8 @@ module SchemaPlus::Indexes
           return false unless self.name == other.name
           return false unless Array.wrap(self.columns).collect(&:to_s).sort == Array.wrap(other.columns).collect(&:to_s).sort
           return false unless !!self.unique == !!other.unique
-          if self.lengths.is_a?(Hash)
-            return false if self.lengths != other.lengths
+          if self.lengths.is_a?(Hash) or other.lengths.is_a?(Hash)
+            return false if (self.lengths || {}) != (other.lengths || {}) # treat nil same as empty hash
           else
             return false if Array.wrap(self.lengths).compact.sort != Array.wrap(other.lengths).compact.sort
           end
