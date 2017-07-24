@@ -63,7 +63,7 @@ describe ActiveRecord::Migration do
       end
       index = @model.indexes.first
 
-      if ActiveRecord.version >= Gem::Version.new('5.0')
+      if index.lengths.is_a? Hash  # as of AR 5.1
         expect(index.lengths).to eq({ "foo" => 8, "bar" => 12})
       else
         expect(Hash[index.columns.zip(index.lengths.map(&:to_i))]).to eq({ "foo" => 8, "bar" => 12})

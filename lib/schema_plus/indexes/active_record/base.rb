@@ -9,7 +9,7 @@ module SchemaPlus::Indexes
         # defind on this model's table.
         #
         def indexes
-          @indexes ||= connection.indexes(table_name, "#{name} Indexes")
+          @indexes ||= connection.indexes(table_name)
         end
 
         # (reset_index_information gets called by by Middleware::Model::ResetColumnInformation)
