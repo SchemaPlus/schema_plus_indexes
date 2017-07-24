@@ -62,7 +62,12 @@ describe ActiveRecord::Migration do
         t.string :bar, :index => { :with => :foo, :length => { :foo => 8, :bar => 12 }}
       end
       index = @model.indexes.first
-      expect(Hash[index.columns.zip(index.lengths.map(&:to_i))]).to eq({ "foo" => 8, "bar" => 12})
+
+      if ActiveRecord.version >= Gem::Version.new('5.0')
+        expect(index.lengths).to eq({ "foo" => 8, "bar" => 12})
+      else
+        expect(Hash[index.columns.zip(index.lengths.map(&:to_i))]).to eq({ "foo" => 8, "bar" => 12})
+      end
     end
 
     it "should create an index if specified explicitly" do
