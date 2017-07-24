@@ -111,7 +111,7 @@ schema_plus_indexes is tested on
 
 <!-- SCHEMA_DEV: MATRIX - end -->
 
-## History
+## Release Notes
 
 ### v0.2.4
 
