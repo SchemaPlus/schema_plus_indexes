@@ -68,7 +68,7 @@ describe "Schema dump" do
   it "should include index order", :mysql => :skip do
     with_index Post, [:user_id, :first_comment_id, :short_id], :order => { :user_id => :asc, :first_comment_id => :desc } do
       # allow :order hash to key on strings (AR 5.0) or symbols (AR 5.1)
-      expect(dump_posts).to match(/"user_id".*:index=>{.*:with=>\["first_comment_id", "short_id"\],.*:order=>{[:"]user_id"?=>:asc, [:"]first_comment_id"?=>:desc, [:"]short_id"?=>:asc}/)
+      expect(dump_posts).to match(/"user_id".*:index=>{.*:with=>\["first_comment_id", "short_id"\],.*:order=>{[:"]first_comment_id"?=>:desc, [:"]user_id"?=>:asc, [:"]short_id"?=>:asc}/)
     end
   end
 

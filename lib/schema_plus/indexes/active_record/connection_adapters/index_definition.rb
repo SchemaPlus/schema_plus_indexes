@@ -3,19 +3,33 @@ module SchemaPlus::Indexes
     module ConnectionAdapters
 
       module IndexDefinition
-
         def initialize(*args) #:nodoc:
           # same args as add_index(table_name, column_names, options)
           if args.length == 3 and Hash === args.last
             table_name, column_names, options = args + [{}]
-            super table_name, options[:name], options[:unique], column_names, options[:length], options[:orders], options[:where], options[:type], options[:using]
+
+            if ::ActiveRecord::VERSION::STRING =~ /5\.2/
+              super table_name,
+                    options[:name],
+                    options[:unique],
+                    column_names,
+                    options.slice(:lengths, :orders, :where, :type, :using)
+            else
+              super table_name, options[:name], options[:unique], column_names, options[:length], options[:orders], options[:where], options[:type], options[:using]
+            end
           else # backwards compatibility
             super
           end
-          unless orders.blank?
-            # fill out orders with :asc when undefined.  make sure hash ordering
-            # follows column ordering.
-            self.orders = Hash[columns.map{|column| [column, orders[column] || :asc]}]
+
+          add_asc_orders
+        end
+
+        # fill out orders with :asc when undefined.  make sure hash ordering
+        # follows column ordering.
+        def add_asc_orders
+          return if orders.blank?
+          columns.each do |column|
+            orders[column] = :asc unless orders[column]
           end
         end
 
