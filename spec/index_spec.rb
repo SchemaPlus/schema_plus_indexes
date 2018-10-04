@@ -53,6 +53,11 @@ describe "index" do
       expect(index_for([:login, :deleted_at]).orders).to eq({"login" => :desc, "deleted_at" => :asc})
     end
 
+    it "should assign order (all same direction)", :mysql => :skip do
+      add_index(:users, [:login, :deleted_at], :order => {:login => :desc, :deleted_at => :desc})
+      expect(index_for([:login, :deleted_at]).orders).to eq({"login" => :desc, "deleted_at" => :desc})
+    end
+
     context "for duplicate index" do
       it "should not complain if the index is the same" do
         add_index(:users, :login)
@@ -64,7 +69,7 @@ describe "index" do
       it "should complain if the index is different" do
         add_index(:users, :login, :unique => true)
         expect(index_for(:login)).not_to be_nil
-        expect { add_index(:users, :login) }.to raise_error
+        expect { add_index(:users, :login) }.to raise_error(ArgumentError, /already exists/)
         expect(index_for(:login)).not_to be_nil
       end
     end
@@ -150,7 +155,7 @@ describe "index" do
     it "raises exception if doesn't exist" do
       expect {
         remove_index :users, :login
-      }.to raise_error
+      }.to raise_error(ArgumentError)
     end
 
     it "doesn't raise exception with :if_exists" do

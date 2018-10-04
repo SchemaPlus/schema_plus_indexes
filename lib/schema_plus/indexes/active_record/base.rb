@@ -6,7 +6,7 @@ module SchemaPlus::Indexes
         public
 
         # Returns a list of IndexDefinition objects, for each index
-        # defind on this model's table.
+        # defined on this model's table.
         #
         def indexes
           @indexes ||= connection.indexes(table_name)

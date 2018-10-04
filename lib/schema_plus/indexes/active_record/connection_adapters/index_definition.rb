@@ -3,19 +3,42 @@ module SchemaPlus::Indexes
     module ConnectionAdapters
 
       module IndexDefinition
+        if Gem::Version.new(::ActiveRecord::VERSION::STRING) >= Gem::Version.new('5.2')
+          attr_accessor :orders
 
-        def initialize(*args) #:nodoc:
-          # same args as add_index(table_name, column_names, options)
-          if args.length == 3 and Hash === args.last
-            table_name, column_names, options = args + [{}]
-            super table_name, options[:name], options[:unique], column_names, options[:length], options[:orders], options[:where], options[:type], options[:using]
-          else # backwards compatibility
-            super
+          def initialize(*args) #:nodoc:
+            # same args as add_index(table_name, column_names, options)
+            if args.length == 3 and Hash === args.last
+              table_name, column_names, options = args + [{}]
+
+              super table_name, options[:name], options[:unique], column_names, options.except(:name, :unique)
+            else # backwards compatibility
+              super
+            end
+            unless orders.blank?
+              # fill out orders with :asc when undefined.  make sure hash ordering
+              # follows column ordering.
+              if self.orders.is_a?(Hash)
+                self.orders = Hash[columns.map{|column| [column, orders[column] || :asc]}]
+              else
+                self.orders = Hash[columns.map{|column| [column, orders || :asc]}]
+              end
+            end
           end
-          unless orders.blank?
-            # fill out orders with :asc when undefined.  make sure hash ordering
-            # follows column ordering.
-            self.orders = Hash[columns.map{|column| [column, orders[column] || :asc]}]
+        else
+          def initialize(*args) #:nodoc:
+            # same args as add_index(table_name, column_names, options)
+            if args.length == 3 and Hash === args.last
+              table_name, column_names, options = args + [{}]
+              super table_name, options[:name], options[:unique], column_names, options[:length], options[:orders], options[:where], options[:type], options[:using]
+            else # backwards compatibility
+              super
+            end
+            unless orders.blank?
+              # fill out orders with :asc when undefined.  make sure hash ordering
+              # follows column ordering.
+              self.orders = Hash[columns.map{|column| [column, orders[column] || :asc]}]
+            end
           end
         end
 
