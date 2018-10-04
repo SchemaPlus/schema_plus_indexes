@@ -24,7 +24,11 @@ describe "Index definition" do
   end
 
   after(:each) do
-    migration.remove_index :users, :name => 'users_login_index' if migration.index_name_exists? :users, 'users_login_index', nil
+    should_remove = Gem::Version.new(ActiveRecord::VERSION::STRING) >= Gem::Version.new('5.2') ?
+      migration.index_name_exists?(:users, 'users_login_index') :
+      migration.index_name_exists?(:users, 'users_login_index', nil)
+
+    migration.remove_index :users, :name => 'users_login_index' if should_remove
   end
 
   context "when index is multicolumn" do
