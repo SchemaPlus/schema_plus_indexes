@@ -114,6 +114,10 @@ schema_plus_indexes is tested on
 
 ## Release Notes
 
+### v0.3.1
+
+* Support AR 5.2.   Thanks to [@jeremyyap](https://github.com/jeremyyap)
+
 ### v0.3.0
 
 * Supports AR 5.1.  Thanks to [@iagopiimenta](https://github.com/iagopiimenta)
