@@ -23,14 +23,8 @@ describe "Index definition" do
     class Post < ::ActiveRecord::Base ; end
   end
 
-  if Gem::Version.new(ActiveRecord::VERSION::STRING) >= Gem::Version.new('5.1')
-    after(:each) do
-      migration.remove_index :users, :name => 'users_login_index' if migration.index_name_exists?(:users, 'users_login_index')
-    end
-  else
-    after(:each) do
-      migration.remove_index :users, :name => 'users_login_index' if migration.index_name_exists?(:users, 'users_login_index', nil)
-    end
+  after(:each) do
+    migration.remove_index :users, :name => 'users_login_index' if migration.index_name_exists?(:users, 'users_login_index')
   end
 
   context "when index is multicolumn" do

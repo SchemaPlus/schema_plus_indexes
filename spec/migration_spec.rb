@@ -162,9 +162,9 @@ describe ActiveRecord::Migration do
 
     protected
 
-    def add_column(column_name, *args)
+    def add_column(column_name, type, **args)
       table = @model.table_name
-      ActiveRecord::Migration.add_column(table, column_name, *args)
+      ActiveRecord::Migration.add_column(table, column_name, type, **args)
       @model.reset_column_information
       yield if block_given?
       ActiveRecord::Migration.remove_column(table, column_name)
@@ -172,16 +172,14 @@ describe ActiveRecord::Migration do
 
   end
 
-
-  def recreate_table(model, opts={}, &block)
-    ActiveRecord::Migration.create_table model.table_name, opts.merge(:force => true), &block
+  def recreate_table(model, **opts, &block)
+    ActiveRecord::Migration.create_table model.table_name, **opts.merge(:force => true), &block
     model.reset_column_information
   end
 
-  def change_table(model, opts={}, &block)
-    ActiveRecord::Migration.change_table model.table_name, opts, &block
+  def change_table(model, **opts, &block)
+    ActiveRecord::Migration.change_table model.table_name, **opts, &block
     model.reset_column_information
   end
 
 end
-
