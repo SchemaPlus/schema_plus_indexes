@@ -115,6 +115,12 @@ schema_plus_indexes is tested on
 
 ## Release Notes
 
+### v1.0.0
+
+* Drop AR < 5.2 and add 6.0 support
+* Drop Ruby < 2.5 and add Ruby 3.0 support
+* Remove its-it GEM
+
 ### v0.3.1
 
 * Support AR 5.2.   Thanks to [@jeremyyap](https://github.com/jeremyyap)
