@@ -1,5 +1,4 @@
 require 'schema_plus/core'
-require 'its-it'
 require 'active_record'
 
 require_relative 'indexes/remove_if_exists'

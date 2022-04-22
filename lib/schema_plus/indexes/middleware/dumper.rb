@@ -11,12 +11,12 @@ module SchemaPlus::Indexes
           env.table.columns.each do |column|
 
             # first check for a single-column index
-            if (index = env.table.indexes.find(&its.columns == [column.name]))
+            if (index = env.table.indexes.find{ |it| it.columns == [column.name] })
               column.options[:index] = index_options(env, column, index)
               env.table.indexes.delete(index)
 
             # then check for the first of a multi-column index
-            elsif (index = env.table.indexes.find(&its.columns.first == column.name))
+            elsif (index = env.table.indexes.find { |it| it.columns.first == column.name })
               column.options[:index] = index_options(env, column, index)
               env.table.indexes.delete(index)
             end

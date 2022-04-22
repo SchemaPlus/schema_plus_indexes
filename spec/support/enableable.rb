@@ -1,7 +1,7 @@
 module Enableable
 
   def enabled_middleware(root, env)
-    middleware = self.singleton_class.ancestors.find(&it.to_s.start_with?("#{root}::Middleware"))
+    middleware = self.singleton_class.ancestors.find { |it| it.to_s.start_with?("#{root}::Middleware") }
     return nil unless middleware.enabled?(env)
     middleware.disable if middleware.once?(env)
     middleware
