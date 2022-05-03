@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SchemaPlus::Indexes
   module RemoveIfExists
     # Extends rails' remove_index to include this options:

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Enableable
 
   def enabled_middleware(root, env)
