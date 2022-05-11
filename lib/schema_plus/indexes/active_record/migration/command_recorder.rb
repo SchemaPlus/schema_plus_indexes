@@ -8,7 +8,8 @@ module SchemaPlus::Indexes
         # inversion of add_index will be remove_index.  add if_exists
         # option for cases where the index doesn't actually exist
         def invert_add_index(args)
-          super.tap { |(command, (arg, options))|
+          super.tap { |(_, args)|
+            options = args[-1]
             options[:if_exists] = true
           }
         end

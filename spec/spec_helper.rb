@@ -2,7 +2,7 @@
 
 require 'simplecov'
 
-SimpleCov.start
+SimpleCov.start unless SimpleCov.running
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
@@ -24,6 +24,11 @@ RSpec.configure do |config|
       example.run
     end
   end
+  config.filter_run_excluding rails: -> (v) {
+    rails_version = Gem::Version.new(ActiveRecord::VERSION::STRING)
+    test = Gem::Requirement.new(v)
+    !test.satisfied_by?(rails_version)
+  }
 end
 
 # shim to handle connection.tables deprecation in favor of
@@ -44,4 +49,3 @@ def define_schema(config={}, &block)
 end
 
 SimpleCov.command_name "[ruby #{RUBY_VERSION} - ActiveRecord #{::ActiveRecord::VERSION::STRING} - #{ActiveRecord::Base.connection.adapter_name}]"
-

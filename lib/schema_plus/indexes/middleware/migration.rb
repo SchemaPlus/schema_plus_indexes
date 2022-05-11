@@ -14,12 +14,23 @@ module SchemaPlus::Indexes
           end
         end
 
-        # Support :index option in Migration.add_column
-        def after(env)
-          return unless env.options[:index]
-          case env.operation
-          when :add, :record
-            env.caller.add_index(env.table_name, env.column_name, env.options[:index])
+        if Gem::Version.new(::ActiveRecord::VERSION::STRING) < Gem::Version.new('6.1')
+          # Support :index option in Migration.add_column
+          def after(env)
+            return unless env.options[:index]
+            case env.operation
+            when :add, :record
+              env.caller.add_index(env.table_name, env.column_name, env.options[:index])
+            end
+          end
+        else
+          # Support :index option in Migration.add_column
+          def after(env)
+            return unless env.options[:index]
+            case env.operation
+            when :add, :record
+              env.caller.add_index(env.table_name, env.column_name, **env.options[:index])
+            end
           end
         end
       end
