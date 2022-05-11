@@ -80,10 +80,8 @@ describe "Schema dump" do
     Regexp.new(Regexp.escape(string))
   end
 
-  def with_index(*args)
-    options = args.extract_options!
-    model, columns = args
-    ActiveRecord::Migration.add_index(model.table_name, columns, options)
+  def with_index(model, columns = nil, **options)
+    ActiveRecord::Migration.add_index(model.table_name, columns, **options)
     model.reset_column_information
     begin
       yield
@@ -111,4 +109,3 @@ describe "Schema dump" do
   end
 
 end
-
