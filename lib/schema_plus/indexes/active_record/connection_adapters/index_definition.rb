@@ -21,6 +21,10 @@ module SchemaPlus::Indexes
           end
         end
 
+        def case_sensitive?
+          false
+        end
+
         # tests if the corresponding indexes would be the same
         def ==(other)
           return false if other.nil?
