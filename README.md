@@ -123,6 +123,10 @@ schema_plus_indexes is tested on
 
 ## Release Notes
 
+### v1.0.1
+* Add AR 6.1 and 7.0 support
+* Add Ruby 3.1 support
+
 ### v1.0.0
 
 * Drop AR < 5.2 and add 6.0 support
